@@ -1,4 +1,4 @@
-from utils import get_som_labeled_img, check_ocr_box, get_caption_model_processor,  get_dino_model, get_yolo_model
+from utils import get_som_labeled_img, check_ocr_box, get_caption_model_processor, get_yolo_model
 import torch
 from ultralytics import YOLO
 from PIL import Image
@@ -50,7 +50,7 @@ class Omniparser(object):
         return [image, return_list]
     
 parser = Omniparser(config)
-image_path = 'examples/pc_1.png'
+image_path = '/pc_1.png'
 
 #  time the parser
 import time

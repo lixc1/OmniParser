@@ -39,7 +39,7 @@ def process(
     imgsz,
     icon_process_batch_size,
 ) -> Optional[Image.Image]:
-    image_save_path = 'imgs/saved_image_demo.png'
+    image_save_path = 'pc_1.png'
     image_input.save(image_save_path)
     image = Image.open(image_save_path)
     box_overlay_ratio = image.size[0] / 3200
@@ -58,7 +58,7 @@ def process(
     image = Image.open(io.BytesIO(base64.b64decode(dino_labled_img)))
     print('finish processing')
     # parsed_content_list = '\n'.join(parsed_content_list)
-    parsed_content_list = '\n'.join([f'type: {x['type']}, content: {x["content"]}, interactivity: {x["interactivity"]}' for x in parsed_content_list])
+    parsed_content_list = '\n'.join([f'type: {x["type"]}, content: {x["content"]}, interactivity: {x["interactivity"]}' for x in parsed_content_list])
     return image, str(parsed_content_list)
 
 
