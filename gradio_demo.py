@@ -39,7 +39,7 @@ def process(
     imgsz,
     icon_process_batch_size,
 ) -> Optional[Image.Image]:
-    image_save_path = 'pc_1.png'
+    image_save_path = 'out.png'
     image_input.save(image_save_path)
     image = Image.open(image_save_path)
     box_overlay_ratio = image.size[0] / 3200
@@ -113,7 +113,7 @@ with gr.Blocks() as demo:
     )
 
 # demo.launch(debug=False, show_error=True, share=True)
-demo.launch(share=True, server_port=7861, server_name='0.0.0.0')
+demo.launch(debug=True, share=False, server_port=7861, server_name='0.0.0.0')
 
 
 
