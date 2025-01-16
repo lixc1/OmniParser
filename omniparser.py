@@ -8,8 +8,8 @@ import base64
 
 
 config = {
-    'som_model_path': 'finetuned_icon_detect.pt',
-    'device': 'cpu',
+    'som_model_path': 'weights/icon_detect_v1_5/model_v1_5.pt',
+    'device': 'gpu',
     'caption_model_path': 'Salesforce/blip2-opt-2.7b',
     'draw_bbox_config': {
         'text_scale': 0.8,
@@ -41,7 +41,7 @@ class Omniparser(object):
         image = Image.open(io.BytesIO(base64.b64decode(dino_labled_img)))
         # formating output
         return_list = [{'from': 'omniparser', 'shape': {'x':coord[0], 'y':coord[1], 'width':coord[2], 'height':coord[3]},
-                        'text': parsed_content_list[i].split(': ')[1], 'type':'text'} for i, (k, coord) in enumerate(label_coordinates.items()) if i < len(parsed_content_list)]
+                        'text': str(parsed_content_list[i]).split(': ')[1], 'type':'text'} for i, (k, coord) in enumerate(label_coordinates.items()) if i < len(parsed_content_list)]
         return_list.extend(
             [{'from': 'omniparser', 'shape': {'x':coord[0], 'y':coord[1], 'width':coord[2], 'height':coord[3]},
                         'text': 'None', 'type':'icon'} for i, (k, coord) in enumerate(label_coordinates.items()) if i >= len(parsed_content_list)]
@@ -50,7 +50,7 @@ class Omniparser(object):
         return [image, return_list]
     
 parser = Omniparser(config)
-image_path = '/pc_1.png'
+image_path = './pc_1.png'
 
 #  time the parser
 import time
@@ -58,3 +58,4 @@ s = time.time()
 image, parsed_content_list = parser.parse(image_path)
 device = config['device']
 print(f'Time taken for Omniparser on {device}:', time.time() - s)
+image.save("out.png")
