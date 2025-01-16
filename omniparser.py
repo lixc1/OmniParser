@@ -6,10 +6,12 @@ from typing import Dict, Tuple, List
 import io
 import base64
 
-
+print(torch.cuda.is_available())  # Should return True
+print(torch.cuda.device_count())  # Number of GPUs available
+print(torch.cuda.get_device_name(0))  # GPU name
 config = {
     'som_model_path': 'weights/icon_detect_v1_5/model_v1_5.pt',
-    'device': 'gpu',
+    'device': 'cuda',
     'caption_model_path': 'Salesforce/blip2-opt-2.7b',
     'draw_bbox_config': {
         'text_scale': 0.8,
@@ -24,8 +26,9 @@ config = {
 class Omniparser(object):
     def __init__(self, config: Dict):
         self.config = config
+        self.device = config['device']
         
-        self.som_model = get_yolo_model(model_path=config['som_model_path'])
+        self.som_model = get_yolo_model(model_path=config['som_model_path']).to(self.device)
         # self.caption_model_processor = get_caption_model_processor(config['caption_model_path'], device=cofig['device'])
         # self.caption_model_processor['model'].to(torch.float32)
 
